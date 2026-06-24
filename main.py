@@ -230,7 +230,7 @@ def main():
         keywords = ISSUE_INPUT.split()[:3]
         dc_posts = []
         for kw in keywords:
-            dc_posts += fetch_dc_posts(keyword=kw, max_posts=10)
+            dc_posts += fetch_dc_posts(keyword=kw, max_posts=20)
             time.sleep(0.5)
         # 중복 제거
         seen = set()
@@ -251,7 +251,7 @@ def main():
         print(f"  나무위키 이슈 섹션: {len(issues)}건")
 
         # DC 최신 글 수집 (전체 동향용)
-        dc_posts = fetch_dc_posts(max_posts=30)
+        dc_posts = fetch_dc_posts(max_posts=100)
         print(f"  DC 최신 글: {len(dc_posts)}건")
 
         for idx, issue in enumerate(issues):
