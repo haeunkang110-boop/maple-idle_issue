@@ -1,7 +1,12 @@
 name: 메키 이슈 히스토리 수집
 
 on:
-  workflow_dispatch:        # 수동 실행 버튼
+  workflow_dispatch:
+    inputs:
+      issue_input:
+        description: '이슈 내용 직접 입력 (비워두면 나무위키 자동 수집)'
+        required: false
+        default: ''
 
 jobs:
   collect:
@@ -22,6 +27,7 @@ jobs:
       - name: 수집 실행
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ISSUE_INPUT: ${{ github.event.inputs.issue_input }}
         run: python main.py
 
       - name: 엑셀 파일 커밋
@@ -29,5 +35,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add meki_이슈_히스토리.xlsx
-          git diff --staged --quiet || git commit -m "자동 수집: $(date +'%Y-%m-%d')"
+          git diff --staged --quiet || git commit -m "이슈 수집: $(date +'%Y-%m-%d %H:%M')"
           git push
