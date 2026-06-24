@@ -74,7 +74,7 @@ def analyze(issue_text, posts):
 }}
 """
     try:
-        resp = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
+        resp = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
         text = re.sub(r"^```json\s*|```$", "", resp.text.strip(), flags=re.MULTILINE).strip()
         return json.loads(text)
     except Exception as e:
